@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dipa's Mehandi Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image:
+                linear-gradient(
+                    rgba(255, 240, 245, 0.20),
+                    rgba(255, 240, 245, 0.20)
+                ),
+                url("./mehandi.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 15px;
+            color: #5c1835;
+        }
+
+        .top-image {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #e6b6c9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px #e6b6c9;
+        }
+
+        .header {
+            text-align: center;
+            background: #9e2855;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 0;
+        }
+
+        .language {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            margin-bottom: 15px;
+            border: 1px solid #d99ab5;
+            border-radius: 8px;
+            font-size: 15px;
+            background: rgba(255, 250, 253, 0.95);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #9e2855;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #761b3e;
+        }
+
+        button:disabled {
+            background: #b98a9e;
+            cursor: wait;
+        }
+
+        #success {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 240, 245, 0.95);
+            border-radius: 12px;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        #error {
+            display: none;
+            color: #a00000;
+            background: #fff0f0;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .small {
+            font-size: 13px;
+            text-align: center;
+            color: #8d5470;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                background-attachment: scroll;
+            }
+
+            .container {
+                padding: 18px;
+                margin: 10px auto;
+            }
+
+            .top-image {
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <img src="./thmb.jpg" alt="Dipa's Mehandi" class="top-image">
+
+    <div class="header">
+        <p id="subtitle">Registration for Course</p>
+    </div>
+
+    <div class="language">
+        <label id="languageLabel">Choose Language / भाषा निवडा</label>
+
+        <select id="language" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="mr">मराठी</option>
+        </select>
+    </div>
+
+    <form id="registrationForm">
+
+        <label id="nameLabel">Enter Your Full Name</label>
+        <input type="text" id="name" placeholder="Your Name" required>
+
+        <label id="cityLabel">Village / City</label>
+        <input type="text" id="city" placeholder="Enter Village or City" required>
+
+        <label id="phoneLabel">Contact Number</label>
+        <input type="tel" id="phone"
+               pattern="[0-9]{10}" maxlength="10"
+               placeholder="10 digit mobile number" required>
+
+        <label id="whatsappLabel">WhatsApp Number</label>
+        <input type="tel" id="whatsapp"
+               pattern="[0-9]{10}" maxlength="10"
+               placeholder="10 digit WhatsApp number" required>
+
+        <label id="kitLabel">Do You Need Course Kit?</label>
+        <select id="kit" required>
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No
+                ```html
+            </option>
+        </select>
+
+        <label id="timeLabel">Preferred Class Time</label>
+        <select id="time" required>
+            <option value="">Select</option>
+            <option value="Morning">Morning</option>
+            <option value="Evening">Evening</option>
+        </select>
+
+        <label id="previousLabel">Have You Attended a Mehandi Class Before?</label>
+        <select id="previous" required onchange="showPrevious()">
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <div id="previousDetails" style="display:none;">
+            <label id="whereLabel">Where Did You Learn?</label>
+            <input type="text" id="where">
+        </div>
+
+        <label id="dateLabel">Registration Date</label>
+        <input type="date" id="date" required>
+
+        <p id="error"></p>
+
+        <button type="submit" id="submitButton">Confirm Admission</button>
+
+        <p class="small" id="note">
+            Please check your details before submitting.
+        </p>
+
+    </form>
+
+    <div id="success">
+        <h2 id="welcome">Welcome to Dipa's Mehandi!</h2>
+        <h3 id="confirmed">Your Admission Is Confirmed!</h3>
+        <p id="studentName"></p>
+        <p id="nextStep">Further instructions will be shared with you soon.</p>
+        <h3>Dipa's Mehandi ❤️</h3>
+    </div>
+
+</div>
+
+<script>
+    // Paste your deployed Google Apps Script Web App URL here
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyIjKi1F30vn-Qqwue64DXah_11SsEExovQ5nbs51iNpZnd_5xiiGOVMC964ePLapK-Ow/exec";
+
+    let currentLanguage = "en";
+
+    function changeLanguage() {
+        currentLanguage = document.getElementById("language").value;
+
+        const text = {
+            en: {
+                subtitle: "Registration for Course",
+                name: "Enter Your Full Name",
+                city: "Village / City",
+                phone: "Contact Number",
+                whatsapp: "WhatsApp Number",
+                kit: "Do You Need Course Kit?",
+                time: "Preferred Class Time",
+                previous: "Have You Attended a Mehandi Class Before?",
+                where: "Where Did You Learn?",
+                date: "Registration Date",
+                submit: "Confirm Admission",
+                note: "Please check your details before submitting.",
+                welcome: "Welcome to Dipa's Mehandi!",
+                confirmed: "Your Admission Is Confirmed!",
+                next: "Further instructions will be shared with you soon on whatsapp.",
+              
+                select: "Select",
+                yes: "Yes",
+                no: "No",
+                morning: "Morning",
+                evening: "Evening"
+            },
+            mr: {
+                subtitle: "कोर्ससाठी नोंदणी फॉर्म",
+                name: "तुमचे पूर्ण नाव लिहा",
+                city: "गाव / शहर",
+                phone: "मोबाईल नंबर",
+                whatsapp: "व्हॉट्सॲप नंबर",
+                kit: "तुम्हाला कोर्स किट हवी आहे का?",
+                time: "क्लासची वेळ निवडा",
+                previous: "तुम्ही यापूर्वी मेहंदी क्लास केला आहे का?",
+                where: "कुठे क्लास केला होता?",
+                date: "नोंदणीची तारीख",
+                submit: "प्रवेश निश्चित करा",
+                note: "सबमिट करण्यापूर्वी माहिती तपासा.",
+                welcome: "Dipa's Mehandi मध्ये तुमचे स्वागत आहे!",
+                confirmed: "तुमचा प्रवेश निश्चित झाला आहे!",
+                next: "पुढील माहिती तुम्हाला लवकरच कळवली जाईल.",
+                select: "निवडा",
+                yes: "होय",
+                no: "नाही",
+                morning: "सकाळी",
+                evening: "संध्याकाळी"
+            }
+        };
+
+        const t = text[currentLanguage];
+
+        document.getElementById("subtitle").textContent = t.subtitle;
+        document.getElementById("nameLabel").textContent = t.name;
+        document.getElementById("cityLabel").textContent = t.city;
+        document.getElementById("phoneLabel").textContent = t.phone;
+        document.getElementById("whatsappLabel").textContent = t.whatsapp;
+        document.getElementById("kitLabel").textContent = t.kit;
+        document.getElementById("timeLabel").textContent = t.time;
+        document.getElementById("previousLabel").textContent = t.previous;
+        document.getElementById("whereLabel").textContent = t.where;
+        document.getElementById("dateLabel").textContent = t.date;
+        document.getElementById("submitButton").textContent = t.submit;
+        document.getElementById("note").textContent = t.note;
+        document.getElementById("welcome").textContent = t.welcome;
+        document.getElementById("confirmed").textContent = t.confirmed;
+        document.getElementById("nextStep").textContent = t.next;
+
+        ["kit", "previous"].forEach(function(id) {
+            const select = document.getElementById(id);
+            select.options[0].text = t.select;
+            select.options[1].text = t.yes;
+            select.options[2].text = t.no;
+        });
+
+        const time = document.getElementById("time");
+        time.options[0].text = t.select;
+        time.options[1].text = t.morning;
+        time.options[2].text = t.evening;
+
+        document.getElementById("languageLabel").textContent =
+            currentLanguage === "mr" ? "भाषा निवडा" : "Choose Language / भाषा निवडा";
+    }
+
+    function showPrevious() {
+        const previous = document.getElementById("previous").value;
+        const details = document.getElementById("previousDetails");
+        const where = document.getElementById("where");
+
+        if (previous === "Yes") {
+            details.style.display = "block";
+            where.required = true;
+        } else {
+            details.style.display = "none";
+            where.required = false;
+            where.value = "";
+        }
+    }
+
+    const today = new Date();
+    const localDate = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+
+    document.getElementById("date").value = localDate;
+
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (scriptURL === "PASTE_YOUR_WEB_APP_URL_HERE") {
+            alert("Please add your Google Apps Script Web App URL first.");
+            return;
+        }
+
+        const submitButton = document.getElementById("submitButton");
+        const errorBox = document.getElementById("error");
+
+        errorBox.style.display = "none";
+        submitButton.disabled = true;
+        submitButton.textContent =
+            currentLanguage === "mr" ? "कृपया थांबा..." : "Please wait...";
+
+        const name = document.getElementById("name").value.trim();
+
+        const data = {
+            fullName: name,
+            village: document.getElementById("city").value.trim(),
+            contact: document.getElementById("phone").value.trim(),
+            whatsapp: document.getElementById("whatsapp").value.trim(),
+            courseKit: document.getElementById("kit").value,
+            classTime: document.getElementById("time").value,
+            previousClass: document.getElementById("previous").value,
+            registrationDate: document.getElementById("date").value
+        };
+
+        fetch(scriptURL, {
+            method: "POST",
+            mode: "no-cors",
+            body: JSON.stringify(data)
+        })
+        .then(function() {
+            document.getElementById("studentName").textContent =
+                (currentLanguage === "mr" ? "विद्यार्थिनीचे नाव: " : "Student Name: ") + name;
+
+            document.getElementById("registrationForm").style.display = "none";
+            document.querySelector(".language").style.display = "none";
+            document.getElementById("success").style.display = "block";
+        })
+        .catch(function(error) {
+            console.log(error);
+
+            errorBox.textContent =
+                currentLanguage === "mr"
+                ? "माहिती पाठवता आली नाही. कृपया पुन्हा प्रयत्न करा."
+                : "Could not send registration. Please try again.";
+
+            errorBox.style.display = "block";
+            submitButton.disabled = false;
+            changeLanguage();
+        });
+    });
+</script>
+
+</body>
+</html>
+```
+
